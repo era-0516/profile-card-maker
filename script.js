@@ -17,6 +17,21 @@ window.onload = async function() {
         
         // 2. CSVを配列に変換
         const rows = text.trim().split('\n').map(row => row.split(','));
+        
+        // AA1セルの値をフッターに反映 ---
+        // A列=0, B列=1 ... Z列=25, AA列=26番目になります
+        // もしAA1が空なら、デフォルトの英語表記のままにします
+        const headerRow = rows[0];
+        const footerText = (headerRow.length > 26 && headerRow[26].trim() !== "") 
+                           ? headerRow[26].trim() 
+                           : 'X Profile Card Generator';
+        
+        // フッターの文字を書き換える
+        const footerEl = document.querySelector('.footer');
+        if (footerEl) {
+            footerEl.textContent = footerText;
+        }
+
         const data = rows.slice(1); // 1行目（ヘッダー）を除外
 
         // 読み込み成功したら「読み込み中...」を消す
